@@ -84,28 +84,62 @@ function operasiInputan() {
     operatorData.push(operationSymbol);
   }
 
-  const riilDisplay = riilData
-    .map(
-      (value, index) => `${index > 0 ? operatorData[index] + " " : ""}${value}`
-    )
-    .join(" ");
-  const imaginerDisplay = imaginerData
-    .map(
-      (value, index) => `${index > 0 ? operatorData[index] + " " : ""}${value}`
-    )
-    .join(" ");
+  function displayhasilOperasi(
+    input,
+    riilData,
+    imaginerData,
+    operatorData,
+    bilRiil,
+    bilImaginer
+  ) {
+    const operatorMatches = input.match(/[\+\-\*\/]/g);
+    const isMultiplicationOrDivision = operatorMatches.some(
+      (op) => op === "*" || op === "/"
+    );
 
-  displayhasilOperasi(input, riilDisplay, imaginerDisplay, bilRiil, bilImaginer);
-  function displayhasilOperasi(input, riilDisplay, imaginerDisplay, bilRiil, bilImaginer) {
-    var hasilOperasiDiv = document.getElementById("hasilOperasi");
-    hasilOperasiDiv.innerHTML = `
-    <h5> Penyelesaian Bilangan Kompleks: </h5>
-    <p> ${input} </p>
-    <p> (${riilDisplay}) (${imaginerDisplay}) </p>
-    <p> ${bilRiil} ${bilImaginer >= 0 ? "+" : ""} ${bilImaginer}i </p>`;
+    let resultString;
+
+    if (isMultiplicationOrDivision) {
+      resultString = `
+      <h5>Penyelesaian Bilangan Kompleks: </h5>
+      <p>${input} </p>
+      <p>${bilRiil} ${bilImaginer >= 0 ? "+" : ""} ${bilImaginer}i</p>`;
+    } else {
+      const riilDisplay = riilData
+        .map(
+          (value, index) =>
+            `${index > 0 ? operatorData[index] + " " : ""}${value}`
+        )
+        .join(" ");
+      const imaginerDisplay = imaginerData
+        .map(
+          (value, index) =>
+            `${index > 0 ? operatorData[index] + " " : ""}${value}`
+        )
+        .join(" ");
+
+      resultString = `
+      <h5>Penyelesaian Bilangan Kompleks: </h5>
+      <p>${input} </p>
+      <p>(${riilDisplay}) (${imaginerDisplay})i </p>
+      <p>${bilRiil} ${bilImaginer >= 0 ? "+" : ""} ${bilImaginer}i </p>`;
+    }
+
+    document.getElementById("hasilOperasi").innerHTML = resultString;
   }
 
+  // Panggil fungsi untuk menampilkan hasil
+  displayhasilOperasi(
+    input,
+    riilData,
+    imaginerData,
+    operatorData,
+    bilRiil,
+    bilImaginer
+  );
+
   // Plotly visualization
+  // data untuk grafik
   const lineData = riilData.map((item, index) => ({
     x: [0, item],
     y: [0, imaginerData[index]],
@@ -115,6 +149,7 @@ function operasiInputan() {
     hoverinfo: "none",
   }));
 
+  // untuk tarik garis dari 0
   const sumLineData = {
     x: [0, bilRiil],
     y: [0, bilImaginer],
@@ -124,6 +159,7 @@ function operasiInputan() {
     hoverinfo: "none",
   };
 
+  // garis titik pada sumbu x
   const dashedLinedOnXAxis = riilData.map((item, index) => ({
     x: [0, item],
     y: [imaginerData[index], imaginerData[index]],
@@ -131,6 +167,7 @@ function operasiInputan() {
     line: { dash: "dash" },
   }));
 
+  //garis titik pada sumbu y
   const dashedLinedOnYAxis = imaginerData.map((item, index) => ({
     x: [riilData[index], riilData[index]],
     y: [0, item],
@@ -138,6 +175,7 @@ function operasiInputan() {
     line: { dash: "dash" },
   }));
 
+  // garis titik untuk sumbu x jumlah bilangan kompleks
   const dashedLineOnSumLineXAxis = {
     x: [0, bilRiil],
     y: [bilImaginer, bilImaginer],
@@ -145,6 +183,7 @@ function operasiInputan() {
     line: { dash: "dash" },
   };
 
+  // garis titik untuk sumbu y jumlah bilangan kompleks
   const dashedLineOnSumLineYAxis = {
     x: [bilRiil, bilRiil],
     y: [0, bilImaginer],
@@ -152,6 +191,7 @@ function operasiInputan() {
     line: { dash: "dash" },
   };
 
+  // mengatur tampilan grafik
   var tampilan = {
     xaxis: {
       title: "bilangan riil",
@@ -173,3 +213,4 @@ function operasiInputan() {
     tampilan
   );
 }
+
