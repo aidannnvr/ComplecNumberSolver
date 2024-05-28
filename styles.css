@@ -13,6 +13,7 @@ body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg, #FED3D3, #6C39DB);
     /* min-height: 2000px; */
+    overflow-x: hidden;
 }
 
 /* Navbar */
