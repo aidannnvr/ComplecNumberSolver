@@ -286,19 +286,19 @@ body {
 .tutor1 {
     position: absolute;
     left: 70px;
-    bottom: 50px;
+    bottom: 10px;
 }
 
 .tutor2 {
     position: absolute;
     left: 500px;
-    bottom: 50px;
+    bottom: 10px;
 }
 
 .tutor3 {
     position: absolute;
     left: 900px;
-    bottom: 50px;
+    bottom: 10px;
 }
 
 .tutor4 {
@@ -543,17 +543,17 @@ body {
 .card1 {
     position: absolute;
     left: 70px;
-    bottom: -40px;
+    bottom: -20px;
 }
 .card2 {
     position: absolute;
     left: 500px;
-    bottom: -40px;
+    bottom: -20px;
 }
 .card3 {
     position: absolute;
     left: 900px;
-    bottom: -40px;
+    bottom: -20px;
 }
 .card4 {
     position: absolute;
